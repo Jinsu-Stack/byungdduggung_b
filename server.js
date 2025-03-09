@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-  origin: '*', // Allow all domains (or set this to your frontend URL later)
+  origin: 'https://byungdduggungf.web.app/', // Allow all domains (or set this to your frontend URL later)
   methods: "GET,POST",
   allowedHeaders: "Content-Type"
 }));
