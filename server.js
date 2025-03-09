@@ -5,8 +5,11 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: '*', // Allow all domains (or set this to your frontend URL later)
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type"
 }));
+
 app.use(express.json());
 
 // 라우터 불러오기
