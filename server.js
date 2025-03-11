@@ -4,6 +4,7 @@ const db = require('./config/db');
 
 const app = express();
 
+// ✅ Enable CORS for Firebase frontend & Render backend
 app.use(cors({
   origin: ['https://byungdduggungf.web.app', 'https://byungdduggung-b.onrender.com'],
   methods: "GET,POST",
@@ -12,7 +13,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// Ensure the `score` table exists
+// ✅ Ensure `score` table exists
 const createTableQuery = `
 CREATE TABLE IF NOT EXISTS score (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -30,15 +31,25 @@ db.query(createTableQuery, (err, result) => {
     }
 });
 
-// ✅ DEBUG: Check if routes are loading
+// ✅ Debug log to confirm API routes are loading
 console.log("🔍 Loading API routes...");
 
+// ✅ Load API Routes
 const scoreRoutes = require('./routes/scores');
 app.use('/api', scoreRoutes);
-
 console.log("✅ API Routes loaded: /api/scores");
 
-// Start server
+// ✅ Handle requests to the root `/` route (Fixes 404 issue)
+app.get('/', (req, res) => {
+  res.send('🚀 Backend is running! Use /api/scores for data.');
+});
+
+// ✅ Handle 404 errors for unknown routes
+app.use((req, res) => {
+  res.status(404).json({ error: "404 Not Found", message: "This route does not exist." });
+});
+
+// ✅ Start the server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`✅ Server is running on port ${PORT}`);
