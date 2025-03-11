@@ -30,9 +30,13 @@ db.query(createTableQuery, (err, result) => {
     }
 });
 
-// Load API routes
+// ✅ DEBUG: Check if routes are loading
+console.log("🔍 Loading API routes...");
+
 const scoreRoutes = require('./routes/scores');
 app.use('/api', scoreRoutes);
+
+console.log("✅ API Routes loaded: /api/scores");
 
 // Start server
 const PORT = process.env.PORT || 3001;
