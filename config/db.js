@@ -1,24 +1,24 @@
 const mysql = require('mysql2');
 
-// Create MySQL connection pool
 const db = mysql.createPool({
-  host: process.env.DB_HOST || "your-mysql-host",
-  user: process.env.DB_USER || "your-username",
-  password: process.env.DB_PASSWORD || "your-password",
-  database: process.env.DB_NAME || "railway", // Change to railway
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
 });
 
-// Test database connection
+// Test the connection
 db.getConnection((err, connection) => {
   if (err) {
-    console.error("❌ Database connection failed:", err);
-    process.exit(1);
+    console.error("❌ Database connection failed:", err.message);
+    process.exit(1); // Stop server if DB is unreachable
+  } else {
+    console.log("✅ Successfully connected to MySQL!");
+    connection.release();
   }
-  console.log("✅ Connected to MySQL database:", process.env.DB_NAME || "railway");
-  connection.release();
 });
 
 module.exports = db;
