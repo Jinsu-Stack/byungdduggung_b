@@ -17,7 +17,17 @@ class LeaderboardService {
     console.log(1);
 
     // 🔐 similarity 복호화 후 숫자로 변환
-    const decryptedSimilarity = parseFloat(decryptAES(scoreData.similarity));
+    let decryptedSimilarity;
+
+    try {
+      const decrypted = decryptAES(scoreData.similarity);
+      console.log("🔓 복호화 성공:", decrypted);
+      decryptedSimilarity = parseFloat(decrypted);
+    } catch (decryptErr) {
+      console.error("❌ 복호화 중 에러 발생:", decryptErr.message);
+      throw new Error("복호화 실패: " + decryptErr.message);
+    }
+
     if (isNaN(decryptedSimilarity)) {
       throw new Error("❌ 복호화된 similarity 값이 숫자가 아닙니다.");
     }
