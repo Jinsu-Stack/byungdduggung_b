@@ -55,6 +55,7 @@ class LeaderboardService {
   async getTopScores() {
     try {
       console.log("🔍 Fetching top scores...");
+      console.log("FuckingConsoleWontShutUp");
 
       const [rows] = await db.promise().execute(
         'SELECT * FROM score ORDER BY similarity DESC LIMIT 5'
