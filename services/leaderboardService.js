@@ -13,18 +13,21 @@ function decryptAES(cipherTextBase64) {
 class LeaderboardService {
   // ✅ 새로운 점수 저장
   async saveScore(scoreData) {
+    // 🔐 similarity 복호화 후 숫자로 변환
+    const decryptedSimilarity = parseFloat(decryptAES(scoreData.similarity));
+    if (isNaN(decryptedSimilarity)) {
+      throw new Error("❌ 복호화된 similarity 값이 숫자가 아닙니다.");
+    }
+
+    console.log(scoreData.similarity);
+    console.log(decryptedSimilarity);
+
     try {
       if (!scoreData.nickname || !scoreData.department || scoreData.similarity === undefined) {
         throw new Error("❌ 필수 데이터가 누락되었습니다.");
       }
 
       console.log("📥 Inserting new score:", scoreData);
-
-      // 🔐 similarity 복호화 후 숫자로 변환
-      const decryptedSimilarity = parseFloat(decryptAES(scoreData.similarity));
-      if (isNaN(decryptedSimilarity)) {
-        throw new Error("❌ 복호화된 similarity 값이 숫자가 아닙니다.");
-      }
 
       const query = `
         INSERT INTO score (nickname, department, similarity) 
