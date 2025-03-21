@@ -13,6 +13,8 @@ function decryptAES(cipherTextBase64) {
 class LeaderboardService {
   // ✅ 새로운 점수 저장
   async saveScore(scoreData) {
+    console.log(1);
+
     // 🔐 similarity 복호화 후 숫자로 변환
     const decryptedSimilarity = parseFloat(decryptAES(scoreData.similarity));
     if (isNaN(decryptedSimilarity)) {
