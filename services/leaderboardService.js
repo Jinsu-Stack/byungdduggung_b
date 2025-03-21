@@ -4,11 +4,12 @@ const CryptoJS = require('crypto-js');
 const AES_KEY = 'c69d6e5dfac54cf4a7cb8f912b71a6eb5df8c8a7c9f28f3a88939f6f1a7d1c9d';
 
 // AES 복호화 함수
+// CryptoJS.enc.Hex.parse(...) 대신 그냥 문자열
 function decryptAES(cipherTextBase64) {
-  const key = CryptoJS.enc.Hex.parse(AES_KEY); // 키를 hex로 파싱
-  const decrypted = CryptoJS.AES.decrypt(cipherTextBase64, key);
+  const decrypted = CryptoJS.AES.decrypt(cipherTextBase64, AES_KEY);
   return decrypted.toString(CryptoJS.enc.Utf8);
 }
+
 
 class LeaderboardService {
   // ✅ 새로운 점수 저장
